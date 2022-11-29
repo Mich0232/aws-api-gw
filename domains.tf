@@ -19,5 +19,4 @@ resource "aws_apigatewayv2_api_mapping" "api_mapping" {
 
   api_mapping_key = each.value.domain_mapping
 
-  tags = local.default_tags
 }
