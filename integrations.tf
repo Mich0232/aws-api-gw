@@ -18,8 +18,6 @@ resource "aws_apigatewayv2_route" "routes" {
 
   authorizer_id      = each.value.authorizer_id != null ? aws_apigatewayv2_authorizer.authorizer[each.value.authorizer_id].id : null
   authorization_type = each.value.authorizer_id != null ? "CUSTOM" : null
-
-  tags = local.default_tags
 }
 
 resource "aws_lambda_permission" "api_gw" {
