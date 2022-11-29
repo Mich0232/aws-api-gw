@@ -146,15 +146,28 @@ module "api" {
 }
 ```
 
-`integrations` - AWS GW Routes & Integrations configuration
+`integrations` - AWS GW Integrations configuration
 ```terraform
 {
   type = map(object({
     invoke_arn             = string
     function_name          = string
-    authorizer_id          = string
-    payload_format_version = string
     stage                  = string
+    method                 = string
+    payload_format_version = string
+  }))
+}
+```
+
+`routes` - AWS GW Routes configuration.
+
+Example key: `"GET /Test"` or `"POST /Login"`
+```terraform
+{
+  type = map(object({
+    function_name = string
+    authorizer_id = string
+    stage         = string
   }))
 }
 ```

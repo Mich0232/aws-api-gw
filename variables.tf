@@ -41,9 +41,17 @@ variable "integrations" {
   type = map(object({
     invoke_arn             = string
     function_name          = string
-    authorizer_id          = string
-    payload_format_version = string
     stage                  = string
+    method                 = string
+    payload_format_version = string
+  }))
+}
+
+variable "routes" {
+  type = map(object({
+    function_name = string
+    authorizer_id = string
+    stage         = string
   }))
 }
 
