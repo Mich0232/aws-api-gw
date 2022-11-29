@@ -17,11 +17,12 @@ resource "aws_apigatewayv2_api" "main" {
 }
 
 resource "aws_apigatewayv2_authorizer" "authorizer" {
+  for_each                          = var.authorizers
   api_id                            = aws_apigatewayv2_api.main.id
   authorizer_type                   = "REQUEST"
-  identity_sources                  = var.authorizer_identity_source
+  identity_sources                  = each.value.authorizer_identity_sources
   name                              = "${local.api_name_with_prefix}-authorizer"
-  authorizer_payload_format_version = "2.0"
-  authorizer_uri                    = var.authorizer_invoke_arn
+  authorizer_payload_format_version = each.value.authorizer_payload_format_version
+  authorizer_uri                    = each.value.invoke_arn
   enable_simple_responses           = true
 }

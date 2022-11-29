@@ -2,7 +2,7 @@ variable "project_name" {
   type = string
 }
 
-variable "api-name" {
+variable "api_name" {
   type = string
 }
 
@@ -16,16 +16,6 @@ variable "cors_allowed_domains" {
   default = []
 }
 
-variable "authorizer_identity_source" {
-  type    = list(string)
-  default = ["$request.header.cookie"]
-}
-
-variable "authorizer_invoke_arn" {
-  type        = string
-  description = "Invoke ARN of authorizer lambda function"
-}
-
 variable "stages" {
   type = map(object({
     domain_id      = string
@@ -34,13 +24,26 @@ variable "stages" {
   }))
 }
 
-variable "integrations" {
-  type = map(object({}))
+variable "authorizers" {
+  type = map(object({
+    invoke_arn                        = string
+    authorizer_payload_format_version = string
+    authorizer_identity_sources       = list(string)
+  }))
+  default = {}
 }
 
+variable "integrations" {
+  type = map(object({
+    invoke_arn             = string
+    function_name          = string
+    authorizer_id          = string
+    payload_format_version = string
+  }))
+}
 
 locals {
-  api_name_with_prefix = "${var.project_name}-${var.api-name}"
+  api_name_with_prefix = "${var.project_name}-${var.api_name}"
   default_log_format = jsonencode({
     requestId               = "$context.requestId"
     sourceIp                = "$context.identity.sourceIp"
