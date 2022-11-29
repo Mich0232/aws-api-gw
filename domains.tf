@@ -7,5 +7,7 @@ resource "aws_apigatewayv2_domain_name" "api_domain" {
     endpoint_type   = "REGIONAL"
     security_policy = "TLS_1_2"
   }
+
+  tags = local.default_tags
 }
 

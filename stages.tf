@@ -1,6 +1,8 @@
 resource "aws_cloudwatch_log_group" "this" {
   for_each = var.stages
   name     = "/aws/api-gw/${aws_apigatewayv2_api.main.name}/${each.key}"
+
+  tags = local.default_tags
 }
 
 resource "aws_apigatewayv2_stage" "this" {
@@ -19,6 +21,8 @@ resource "aws_apigatewayv2_stage" "this" {
     destination_arn = aws_cloudwatch_log_group.this[each.key].arn
     format          = local.default_log_format
   }
+
+  tags = local.default_tags
 }
 
 resource "aws_apigatewayv2_api_mapping" "api_mapping" {
@@ -28,5 +32,7 @@ resource "aws_apigatewayv2_api_mapping" "api_mapping" {
   stage       = aws_apigatewayv2_stage.this[each.key].id
 
   api_mapping_key = each.value.domain_mapping
+
+  tags = local.default_tags
 }
 

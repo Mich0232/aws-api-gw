@@ -14,6 +14,8 @@ resource "aws_apigatewayv2_api" "main" {
       allow_credentials = true
     }
   }
+
+  tags = local.default_tags
 }
 
 resource "aws_apigatewayv2_authorizer" "authorizer" {
@@ -25,4 +27,6 @@ resource "aws_apigatewayv2_authorizer" "authorizer" {
   authorizer_payload_format_version = each.value.authorizer_payload_format_version
   authorizer_uri                    = each.value.invoke_arn
   enable_simple_responses           = true
+
+  tags = local.default_tags
 }

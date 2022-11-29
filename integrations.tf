@@ -6,6 +6,8 @@ resource "aws_apigatewayv2_integration" "main" {
   integration_type       = "AWS_PROXY"
   integration_method     = "POST"
   payload_format_version = each.value.payload_format_version
+
+  tags = local.default_tags
 }
 
 resource "aws_apigatewayv2_route" "routes" {
@@ -17,6 +19,8 @@ resource "aws_apigatewayv2_route" "routes" {
 
   authorizer_id      = each.value.authorizer_id != null ? aws_apigatewayv2_authorizer.authorizer[each.value.authorizer_id].id : null
   authorization_type = each.value.authorizer_id != null ? "CUSTOM" : null
+
+  tags = local.default_tags
 }
 
 resource "aws_lambda_permission" "api_gw" {
@@ -28,4 +32,6 @@ resource "aws_lambda_permission" "api_gw" {
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.main.execution_arn}/*/*"
+
+  tags = local.default_tags
 }

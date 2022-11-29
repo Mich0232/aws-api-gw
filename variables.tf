@@ -42,6 +42,16 @@ variable "integrations" {
   }))
 }
 
+variable "tags" {
+  type    = map(string)
+  default = {}
+
+  validation {
+    condition     = length(keys(var.tags)) <= 8
+    error_message = "You can assign up to 8 tags to the S3 Object."
+  }
+}
+
 locals {
   api_name_with_prefix = "${var.project_name}-${var.api_name}"
   default_log_format = jsonencode({
@@ -57,4 +67,9 @@ locals {
     integrationErrorMessage = "$context.integrationErrorMessage"
     }
   )
+
+  default_tags = merge({
+    Project = var.project_name,
+    Name    = var.api_name
+  }, var.tags)
 }
