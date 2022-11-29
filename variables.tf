@@ -9,7 +9,6 @@ variable "api_name" {
 variable "domains" {
   type = map(object({
     certificate_arn = string
-    domain_id       = string
     domain_mapping  = string
     stage           = string
   }))

@@ -12,11 +12,9 @@ resource "aws_apigatewayv2_domain_name" "api_domain" {
 }
 
 resource "aws_apigatewayv2_api_mapping" "api_mapping" {
-  for_each    = var.domains
-  api_id      = aws_apigatewayv2_api.main.id
-  domain_name = each.value.domain_id
-  stage       = aws_apigatewayv2_stage.this[each.value.stage].id
-
+  for_each        = var.domains
+  api_id          = aws_apigatewayv2_api.main.id
+  domain_name     = each.key
+  stage           = aws_apigatewayv2_stage.this[each.value.stage].id
   api_mapping_key = each.value.domain_mapping
-
 }
