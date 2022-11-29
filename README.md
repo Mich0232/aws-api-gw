@@ -18,7 +18,7 @@ You can specify API routes using configuration. Each integration is of type AWS 
 
 ```terraform
 module "api" {
-  source       = "git@github.com:Mich0232/aws-api-gw.git"
+  source       = "https://github.com/Mich0232/aws-package.git"
   project_name = local.project_name
   api_name     = "my-api"
   stages = {
@@ -75,7 +75,7 @@ Endpoint type will be set to `REGIONAL` and security policy to `TLS_1_2`
 
 ```terraform
 module "api" {
-  source       = "git@github.com:Mich0232/aws-api-gw.git"
+  source       = "https://github.com/Mich0232/aws-package.git"
   project_name = local.project_name
   api_name     = "my-api"
   ...
