@@ -1,11 +1,12 @@
 locals {
-  cors_settings = length(var.cors_allowed_domains) > 0 ? [1] : []
+  cors_settings                = length(var.cors_allowed_domains) > 0 ? [1] : []
+  disable_execute_api_endpoint = length(var.domains) > 0
 }
 
 resource "aws_apigatewayv2_api" "main" {
   name                         = local.api_name_with_prefix
   protocol_type                = "HTTP"
-  disable_execute_api_endpoint = true
+  disable_execute_api_endpoint = local.disable_execute_api_endpoint
 
   dynamic "cors_configuration" {
     for_each = local.cors_settings
