@@ -7,7 +7,12 @@ variable "api_name" {
 }
 
 variable "domains" {
-  type    = map(string)
+  type = map(object({
+    certificate_arn = string
+    domain_id       = string
+    domain_mapping  = string
+    stage           = string
+  }))
   default = {}
 }
 
@@ -18,9 +23,7 @@ variable "cors_allowed_domains" {
 
 variable "stages" {
   type = map(object({
-    domain_id      = string
-    domain_mapping = string
-    auto_deploy    = bool
+    auto_deploy = bool
   }))
 }
 

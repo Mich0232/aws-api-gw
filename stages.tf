@@ -24,15 +24,3 @@ resource "aws_apigatewayv2_stage" "this" {
 
   tags = local.default_tags
 }
-
-resource "aws_apigatewayv2_api_mapping" "api_mapping" {
-  for_each    = var.stages
-  api_id      = aws_apigatewayv2_api.main.id
-  domain_name = each.value.domain_id
-  stage       = aws_apigatewayv2_stage.this[each.key].id
-
-  api_mapping_key = each.value.domain_mapping
-
-  tags = local.default_tags
-}
-
