@@ -29,3 +29,15 @@ resource "aws_apigatewayv2_authorizer" "authorizer" {
   authorizer_uri                    = each.value.invoke_arn
   enable_simple_responses           = true
 }
+
+resource "aws_lambda_permission" "api_gw_authorizers" {
+  for_each = var.authorizers
+
+  function_name = each.value.function_name
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.main.execution_arn}/${each.value.stage}/*"
+
+}

@@ -30,8 +30,10 @@ variable "stages" {
 variable "authorizers" {
   type = map(object({
     invoke_arn                        = string
+    function_name                     = string
     authorizer_payload_format_version = string
     authorizer_identity_sources       = list(string)
+    stage                             = string
   }))
   default = {}
 }
@@ -42,6 +44,7 @@ variable "integrations" {
     function_name          = string
     authorizer_id          = string
     payload_format_version = string
+    stage                  = string
   }))
 }
 
