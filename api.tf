@@ -37,7 +37,5 @@ resource "aws_lambda_permission" "api_gw_authorizers" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_apigatewayv2_api.main.execution_arn}/${each.value.stage}/*"
-
+  source_arn    = "${aws_apigatewayv2_api.main.execution_arn}/*/*"
 }
