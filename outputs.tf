@@ -1,3 +1,11 @@
+locals {
+  invoke_urls = aws_apigatewayv2_stage.this[*]
+}
+
+output "data" {
+  value = aws_apigatewayv2_stage.this[*]
+}
+
 output "invoke_urls" {
-  value = aws_apigatewayv2_stage.this[*].invoke_url
+  value = local.invoke_urls
 }
