@@ -39,7 +39,7 @@ module "api" {
   
   routes = {
     "GET /Info" : {
-      function_name = module.lambda.function_name
+      integration   = "main"
       authorizer_id = ""
       stage         = "v1"
     }
@@ -183,7 +183,7 @@ Example key: `"GET /Test"` or `"POST /Login"`
 ```terraform
 {
   type = map(object({
-    function_name = string
+    integration   = string
     authorizer_id = string
     stage         = string
   }))
