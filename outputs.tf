@@ -1,11 +1,7 @@
 locals {
-  invoke_urls = aws_apigatewayv2_stage.this[*]
-}
-
-output "data" {
-  value = aws_apigatewayv2_stage.this[*]
+  data = flatten([for url in aws_apigatewayv2_stage.this[*] : values(url)])
 }
 
 output "invoke_urls" {
-  value = local.invoke_urls
+  value = { for v in local.data : v.id => v.invoke_url }
 }
