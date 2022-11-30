@@ -26,13 +26,22 @@ module "api" {
       auto_deploy = true
     }
   }
+  
   integrations = {
-    "GET /Info" : {
-      stage                  = "v1"
-      authorizer_id          = ""
-      payload_format_version = "2.0"
-      invoke_arn             = module.lambda.invoke_arn
+    "main" : {
       function_name          = module.lambda.function_name
+      invoke_arn             = module.lambda.invoke_arn
+      stage                  = "v1"
+      method                 = "POST"
+      payload_format_version = "2.0"
+    }
+  }
+  
+  routes = {
+    "GET /Info" : {
+      function_name = module.lambda.function_name
+      authorizer_id = ""
+      stage         = "v1"
     }
   }
 }
@@ -55,13 +64,22 @@ module "api" {
       stage                             = "v1"
     }
   }
+
   integrations = {
-    "GET /Info" : {
-      stage                  = "v1"
-      authorizer_id          = "my_authorizer"
-      payload_format_version = "2.0"
-      invoke_arn             = module.lambda.invoke_arn
+    "main" : {
       function_name          = module.lambda.function_name
+      invoke_arn             = module.lambda.invoke_arn
+      stage                  = "v1"
+      method                 = "POST"
+      payload_format_version = "2.0"
+    }
+  }
+
+  routes = {
+    "GET /Info" : {
+      integration   = "main"
+      authorizer_id = "my_authorizer"
+      stage         = "v1"
     }
   }
   ...

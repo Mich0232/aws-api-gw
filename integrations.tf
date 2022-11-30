@@ -25,7 +25,7 @@ resource "aws_apigatewayv2_route" "routes" {
 
   api_id    = aws_apigatewayv2_api.main.id
   route_key = each.key
-  target    = "integrations/${aws_apigatewayv2_integration.main[each.key].id}"
+  target    = "integrations/${aws_apigatewayv2_integration.main[each.value.integration].id}"
 
   authorizer_id      = each.value.authorizer_id != null ? aws_apigatewayv2_authorizer.authorizer[each.value.authorizer_id].id : null
   authorization_type = each.value.authorizer_id != null ? "CUSTOM" : null

@@ -49,7 +49,7 @@ variable "integrations" {
 
 variable "routes" {
   type = map(object({
-    function_name = string
+    integration   = string
     authorizer_id = string
     stage         = string
   }))
